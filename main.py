@@ -10,6 +10,7 @@ class Snake:
         pos = cell_number / 2
         self.body = [Vector2(pos - 3, pos), Vector2(pos - 2, pos), Vector2(pos - 1, pos)]
         self.direction = Vector2(1, 0)
+        self.new_block = False
     
     def draw(self):
         for block in self.body:
@@ -17,9 +18,18 @@ class Snake:
             pygame.draw.rect(screen, (56, 102, 65), block_rect)
 
     def move(self):
-        body_copy = self.body[:-1]
-        body_copy.insert(0, body_copy[0] + self.direction)
-        self.body = body_copy[:]
+        if self.new_block:
+            body_copy = self.body[:]
+            body_copy.insert(0, body_copy[0] + self.direction)
+            self.body = body_copy[:]
+            self.new_block = False
+        else:
+            body_copy = self.body[:-1]
+            body_copy.insert(0, body_copy[0] + self.direction)
+            self.body = body_copy[:]
+
+    def grow(self):
+        self.new_block = True
 
 class Fruit:
     def __init__(self):
@@ -50,6 +60,7 @@ class Game:
     def check_collision(self):
         if self.fruit.pos == self.snake.body[0]:
             self.fruit.spawn()
+            self.snake.grow()
 
 pygame.init()
 
