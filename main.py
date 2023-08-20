@@ -52,6 +52,7 @@ class Game:
     def update(self):
         self.snake.move()
         self.check_collision()
+        self.check_fail()
 
     def draw(self):
         self.fruit.draw()
@@ -61,6 +62,19 @@ class Game:
         if self.fruit.pos == self.snake.body[0]:
             self.fruit.spawn()
             self.snake.grow()
+
+    def check_fail(self):
+        if not 0 <= self.snake.body[0].x or not self.snake.body[0].x < cell_number:
+            self.over()
+
+        if not self.snake.body[0].y >= 0 or not self.snake.body[0].y < cell_number:
+            self.over()
+
+    @staticmethod
+    def over():
+        pygame.quit()
+        sys.exit()
+
 
 pygame.init()
 
@@ -77,12 +91,10 @@ game = Game()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+            game.over()
         
         if event.type == pygame.USEREVENT:
             game.update()
-
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
