@@ -32,12 +32,15 @@ class Snake:
     
     def draw(self):
         self.update_head_graphics()
+        self.update_tail_graphics()
 
         for index, block in enumerate(self.body):
             rect = pygame.Rect(block.x * cell_size, block.y * cell_size, cell_size, cell_size)
 
             if index == 0:
                 screen.blit(self.head, rect)
+            elif index == len(self.body) -1:
+                screen.blit(self.tail, rect)
             else:
                 pygame.draw.rect(screen, (56, 102, 65), rect)
 
@@ -48,6 +51,14 @@ class Snake:
         elif head_relation == Vector2(-1, 0): self.head = self.head_right
         elif head_relation == Vector2(0, 1): self.head = self.head_up
         elif head_relation == Vector2(0, -1): self.head = self.head_down
+
+    def update_tail_graphics(self):
+        tail_relation = self.body[-2] - self.body[-1]
+        
+        if tail_relation == Vector2(1, 0): self.tail = self.tail_left
+        elif tail_relation == Vector2(-1, 0): self.tail = self.tail_right
+        elif tail_relation == Vector2(0, 1): self.tail = self.tail_up
+        elif tail_relation == Vector2(0, -1): self.tail = self.tail_down
 
     def move(self):
         if self.new_block:
