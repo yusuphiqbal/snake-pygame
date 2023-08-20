@@ -117,6 +117,7 @@ class Game:
         self.check_fail()
 
     def draw(self):
+        self.draw_grass()
         self.fruit.draw()
         self.snake.draw()
 
@@ -141,6 +142,20 @@ class Game:
         pygame.quit()
         sys.exit()
 
+    def draw_grass(self):
+        grass_color = (118, 200, 147)
+
+        for row in range(cell_number):
+            if row % 2 == 0:
+                for col in range(cell_number):
+                    if col % 2 == 0:
+                        grass_rect = pygame.Rect(col * cell_size, row * cell_size,cell_size, cell_size)
+                        pygame.draw.rect(screen, grass_color, grass_rect)
+            else:
+                for col in range(cell_number):
+                    if col % 2 != 0:
+                        grass_rect = pygame.Rect(col * cell_size, row * cell_size,cell_size, cell_size)
+                        pygame.draw.rect(screen, grass_color, grass_rect)
 
 pygame.init()
 
@@ -178,7 +193,7 @@ while True:
                 game.snake.direction = Vector2(1, 0)
 
 
-    screen.fill((167, 201, 87))
+    screen.fill((153, 217, 140))
     game.draw()
     pygame.display.update()
     clock.tick(60)
