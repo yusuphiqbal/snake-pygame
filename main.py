@@ -23,14 +23,16 @@ class Snake:
 
 class Fruit:
     def __init__(self):
-        self.x = randint(0, cell_number - 1)
-        self.y = randint(0, cell_number - 1)
-        self.pos = Vector2(self.x, self.y)
+        self.spawn()
     
     def draw(self):
         fruit_rect = pygame.Rect(self.pos.x * cell_size, self.pos.y * cell_size, cell_size, cell_size)
         pygame.draw.rect(screen, (188, 71, 73), fruit_rect)
 
+    def spawn(self):
+        self.x = randint(0, cell_number - 1)
+        self.y = randint(0, cell_number - 1)
+        self.pos = Vector2(self.x, self.y)
 
 class Game:
     def __init__(self):
@@ -39,11 +41,15 @@ class Game:
     
     def update(self):
         self.snake.move()
+        self.check_collision()
 
     def draw(self):
         self.fruit.draw()
         self.snake.draw()
 
+    def check_collision(self):
+        if self.fruit.pos == self.snake.body[0]:
+            self.fruit.spawn()
 
 pygame.init()
 
@@ -65,6 +71,7 @@ while True:
         
         if event.type == pygame.USEREVENT:
             game.update()
+
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
