@@ -133,6 +133,10 @@ class Game:
             self.fruit.spawn()
             self.snake.grow()
 
+        for block in self.snake.body[1:]:
+            if block == self.fruit.pos:
+                self.fruit.spawn()
+
     def check_fail(self):
         if not 0 <= self.snake.body[0].x or not self.snake.body[0].x < cell_number:
             self.over()
