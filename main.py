@@ -36,8 +36,8 @@ class Fruit:
         self.spawn()
     
     def draw(self):
-        fruit_rect = pygame.Rect(self.pos.x * cell_size, self.pos.y * cell_size, cell_size, cell_size)
-        pygame.draw.rect(screen, (188, 71, 73), fruit_rect)
+        rect = pygame.Rect(self.pos.x * cell_size, self.pos.y * cell_size, cell_size, cell_size)
+        screen.blit(apple, rect)
 
     def spawn(self):
         self.x = randint(0, cell_number - 1)
@@ -87,6 +87,8 @@ cell_number = 20
 
 screen  = pygame.display.set_mode((cell_number * cell_size, cell_number * cell_size))
 clock = pygame.time.Clock()
+
+apple = pygame.image.load('assets/images/apple.png').convert_alpha()
 
 pygame.time.set_timer(pygame.USEREVENT, 150)
 
