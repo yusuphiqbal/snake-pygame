@@ -8,7 +8,7 @@ from pygame import Vector2
 class Snake:
     def __init__(self):
         pos = cell_number / 2
-        self.body = [Vector2(pos - 3, pos), Vector2(pos - 2, pos), Vector2(pos - 1, pos)]
+        self.body = [Vector2(pos -5, pos), Vector2(pos - 6, pos), Vector2(pos - 7, pos)]
         self.direction = Vector2(1, 0)
         self.new_block = False
     
@@ -69,6 +69,10 @@ class Game:
 
         if not self.snake.body[0].y >= 0 or not self.snake.body[0].y < cell_number:
             self.over()
+
+        for block in self.snake.body[1:]:
+            if block == self.snake.body[0]:
+                self.over()
 
     @staticmethod
     def over():
