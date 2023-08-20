@@ -9,7 +9,7 @@ class Snake:
     def __init__(self):
         pos = cell_number / 2
         self.body = [Vector2(pos -5, pos), Vector2(pos - 6, pos), Vector2(pos - 7, pos)]
-        self.direction = Vector2(1, 0)
+        self.direction = Vector2(0, 0)
         self.new_block = False
 
         self.head_up = pygame.image.load('assets/images/head_up.png').convert_alpha()
@@ -98,6 +98,11 @@ class Snake:
     def play_crunch_sound(self):
         self.crunch_sound.play()
 
+    def reset(self):
+        pos = cell_number / 2
+        self.body = [Vector2(pos -5, pos), Vector2(pos - 6, pos), Vector2(pos - 7, pos)]
+        self.direction = Vector2(0, 0)
+
 class Fruit:
     def __init__(self):
         self.spawn()
@@ -148,10 +153,9 @@ class Game:
             if block == self.snake.body[0]:
                 self.over()
 
-    @staticmethod
-    def over():
-        pygame.quit()
-        sys.exit()
+    
+    def over(self):
+        self.snake.reset()
 
     def draw_grass(self):
         grass_color = (118, 200, 147)
@@ -197,7 +201,8 @@ game = Game()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            game.over()
+            pygame.quit()
+            sys.exit()
         
         if event.type == pygame.USEREVENT:
             game.update()
