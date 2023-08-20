@@ -5,6 +5,17 @@ import pygame
 from pygame import Vector2
 
 
+class Snake:
+    def __init__(self):
+        pos = cell_number / 2
+        self.body = [Vector2(pos - 3, pos), Vector2(pos - 2, pos), Vector2(pos - 1, pos)]
+    
+    def draw(self):
+        for block in self.body:
+            block_rect = pygame.Rect(block.x * cell_size, block.y * cell_size, cell_size, cell_size)
+            pygame.draw.rect(screen, (56, 102, 65), block_rect)
+
+
 class Fruit:
     def __init__(self):
         self.x = randint(0, cell_number - 1)
@@ -25,6 +36,7 @@ screen  = pygame.display.set_mode((cell_number * cell_size, cell_number * cell_s
 clock = pygame.time.Clock()
 
 fruit = Fruit()
+snake = Snake()
 
 while True:
     for event in pygame.event.get():
@@ -34,5 +46,6 @@ while True:
 
     screen.fill((167, 201, 87))
     fruit.draw()
+    snake.draw()
     pygame.display.update()
     clock.tick(60)
