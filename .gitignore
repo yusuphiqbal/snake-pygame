@@ -1,0 +1,7 @@
+# byte-compiled / optimized / dll files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# virtual environment
+venv/
