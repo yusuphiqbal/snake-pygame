@@ -29,6 +29,8 @@ class Snake:
         self.body_br = pygame.image.load('assets/images/body_br.png').convert_alpha()
         self.body_tl = pygame.image.load('assets/images/body_tl.png').convert_alpha()
         self.body_tr = pygame.image.load('assets/images/body_tr.png').convert_alpha()
+
+        self.crunch_sound = pygame.mixer.Sound('assets/sounds/crunch.wav')
     
     def draw(self):
         self.update_head_graphics()
@@ -93,6 +95,9 @@ class Snake:
     def grow(self):
         self.new_block = True
 
+    def play_crunch_sound(self):
+        self.crunch_sound.play()
+
 class Fruit:
     def __init__(self):
         self.spawn()
@@ -124,6 +129,7 @@ class Game:
 
     def check_collision(self):
         if self.fruit.pos == self.snake.body[0]:
+            self.snake.play_crunch_sound()
             self.fruit.spawn()
             self.snake.grow()
 
@@ -168,6 +174,7 @@ class Game:
         screen.blit(score_surface, score_rect)
         screen.blit(apple, apple_rect)
 
+pygame.mixer.pre_init(44100, -16, 2, 512)
 pygame.init()
 
 cell_size = 40
